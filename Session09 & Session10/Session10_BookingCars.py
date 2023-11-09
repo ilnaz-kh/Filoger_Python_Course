@@ -88,6 +88,10 @@ def booking():
   if end_date > current_date + datetime.timedelta(days=180): # 180 days ~ 6 months
     print(f"Error: the end date {end_date} is more than six months from the current date!")
     return
+  ## Check the maximum duration of booking:
+  if count_days > 10:
+    print("Error: Bookings cannot exceed a duration of 10 days.")
+    return
   
   cost = calculate_cost(count_days, COST_RATE)
   # Create new booking
