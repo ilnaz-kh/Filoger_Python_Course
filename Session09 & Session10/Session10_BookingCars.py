@@ -42,6 +42,7 @@ def find_days(start_date, end_date):
   else:
     new_start_date = start_date + datetime.timedelta(days=1)
     return 1 + find_days(new_start_date, end_date)
+
 # Function to handle booking of cars
 def booking():
   global code # Declare code as global since we're modifying it
@@ -66,12 +67,23 @@ def booking():
   end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
   count_days = end_date - start_date
   count_days = count_days.days
-  res = find_days(start_date, end_date)
-  print(res, count_days)
-  # Check if the end date comes before the start date
-  if start_date > end_date:
-    print("Error!")
+  # res = find_days(start_date, end_date)
+  # print(res, count_days)
+
+  ## Check if the start date comes before the current date:
+  current_date = datetime.date.today()
+  if start_date < current_date:
+    print(f"Error: The start date '{start_date}' is in the past!")
     return
+  ## Check if the end date comes before the start date
+  if start_date > end_date:
+    print(f"Error: The start date '{start_date}' should be before the end date '{end_date}'!")
+    return
+  ## Check if the end date is more than six months from the current date:
+  if end_date > current_date + datetime.timedelta(days=180): # 180 days ~ 6 months
+    print(f"Error: the end date {end_date} is more than six months from the current date!")
+    return
+  
   # Create new booking
   new_booking = {
     "name" : name, 
