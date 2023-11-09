@@ -7,8 +7,13 @@ bookings = {}
 total_cars = 10
 # Variable to generate unique booking codes
 code = 1
+# Constant for cost rate per day ($)
+COST_RATE = 40
 
 # ----------------Functions----------------
+# Function to calculate the cost
+calculate_cost = lambda days, rate : days*rate
+
 # Function to display help information
 def help():
   help_text = """
@@ -84,12 +89,14 @@ def booking():
     print(f"Error: the end date {end_date} is more than six months from the current date!")
     return
   
+  cost = calculate_cost(count_days, COST_RATE)
   # Create new booking
   new_booking = {
     "name" : name, 
     "start_date" : start_date,
     "end_date" : end_date,
-    "days" : count_days
+    "days" : count_days,
+    "cost" : cost
   }
   print(new_booking)
   # save with new code
@@ -111,6 +118,7 @@ def display():
       print(f"start date : {booking['start_date']}")
       print(f"end date : {booking['end_date']}")
       print(f"days : {booking['days']}")
+      print(f"cost : ${booking['cost']}")
   else:
     print("empty")
 
@@ -123,6 +131,7 @@ def search_by_code(code_s):
     print(f"start date : {booking['start_date']}")
     print(f"end date : {booking['end_date']}")
     print(f"days : {booking['days']}")
+    print(f"cost : ${booking['cost']}")
   else:
     print("not found!")
 
@@ -135,6 +144,7 @@ def search_by_name(name):
       print(f"start date : {booking['start_date']}")
       print(f"end date : {booking['end_date']}")
       print(f"days : {booking['days']}")
+      print(f"cost : ${booking['cost']}")
       found = True
   if not found:
     print(f"{name}: not found!")
@@ -145,7 +155,7 @@ def search():
   if cmd == "name":
     name = input("name for search: ")
     search_by_name(name)
-  if cmd == "code":
+  elif cmd == "code":
     code_s = int(input("code for search: "))
     search_by_code(code_s)
   else:
