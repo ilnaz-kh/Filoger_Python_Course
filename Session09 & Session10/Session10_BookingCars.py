@@ -169,9 +169,15 @@ def search():
 def details():
   num_booked_cars = len(bookings)
   num_available_cars = total_cars - num_booked_cars
+  total_costs = total_num_days = 0
+  for code, booking in bookings.items():
+    total_costs += booking['cost']
+    total_num_days += booking['days']
   print(f"Total number of cars: {total_cars}")
   print(f"number of booked: {num_booked_cars}")
   print(f"number of availabel: {num_available_cars}")
+  print(f"The total cost from all active bookings: {total_costs}")
+  print(f"The total number of days for which cars have been booked: {total_num_days}")
 
 # ----------------Main----------------
 while True:
